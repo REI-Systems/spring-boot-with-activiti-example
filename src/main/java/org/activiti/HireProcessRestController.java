@@ -18,13 +18,21 @@ public class HireProcessRestController {
     @Autowired
     private ApplicantRepository applicantRepository;
 
+    @Autowired
+    private GrantsApplicationRepository grantsApplicationRepository;
+
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(value = "/start-hire-process", method = RequestMethod.POST,
+    @RequestMapping(value = "/start-hiring-process", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void startHireProcess(@RequestBody Map<String, String> data) {
 
         Applicant applicant = new Applicant(data.get("name"), data.get("email"), data.get("phoneNumber"));
         applicantRepository.save(applicant);
+
+        GrantsApplication grantsApplication = new GrantsApplication(data.get("title"),
+                data.get("description"),
+                data.get("applicationDate"));
+        grantsApplicationRepository.save(grantsApplication);
 
         Map<String, Object> vars = Collections.<String, Object>singletonMap("applicant", applicant);
         runtimeService.startProcessInstanceByKey("hireProcessWithJpa", vars);

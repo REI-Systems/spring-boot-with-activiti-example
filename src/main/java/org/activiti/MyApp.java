@@ -46,7 +46,17 @@ public class MyApp {
 
                 User admin = identityService.newUser("admin");
                 admin.setPassword("admin");
+                admin.setFirstName("John");
+                admin.setLastName("Doe");
+                admin.setEmail("john.doe@gmail.com");
                 identityService.saveUser(admin);
+
+                User activiti = identityService.newUser("activiti");
+                activiti.setPassword("activiti");
+                activiti.setFirstName("Activiti");
+                activiti.setLastName("User");
+                activiti.setEmail("activiti.user@gmail.com");
+                identityService.saveUser(activiti);
 
             }
         };
